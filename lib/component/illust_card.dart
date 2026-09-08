@@ -207,7 +207,7 @@ class _IllustCardState extends State<IllustCard> {
     return Card(
       margin: EdgeInsets.all(8.0),
       clipBehavior: Clip.antiAlias,
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).colorScheme.surfaceContainer,
       child: _buildAnimationWraper(
         context,
         Column(

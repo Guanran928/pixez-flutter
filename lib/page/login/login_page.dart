@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.message),
+              icon: Icon(Icons.info),
               onPressed: () {
                 Navigator.of(
                   context,

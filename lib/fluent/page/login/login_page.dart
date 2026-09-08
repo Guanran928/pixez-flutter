@@ -64,12 +64,12 @@ class _LoginPageState extends State<LoginPage> {
             },
           ),
           CommandBarButton(
-            icon: Icon(FluentIcons.message),
+            icon: Icon(FluentIcons.info),
             onPressed: () {
               Leader.push(
                 context,
                 AboutPage(),
-                icon: Icon(FluentIcons.message),
+                icon: Icon(FluentIcons.info),
                 title: Text(I18n.of(context).about),
               );
             },

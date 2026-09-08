@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (context) => TokenPage(),
                             );
                           },
-                          child: Text("Token"),
+                          child: Text(I18n.of(context).login_with_token),
                         ),
                         SizedBox(height: 4),
                         HyperlinkButton(

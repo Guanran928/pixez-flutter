@@ -216,7 +216,7 @@
   "permission_denied": "Permiso denegado",
   "old_way_message": "Para utilizar este método, deberá permitir que PixEz acceda a sus archivos y seleccione una directorio.",
   "return_again_to_exit": "Regresa de nuevo para salir",
-  "save_format_lose_part_warning": "El formato de guardado debe incluir {part},de lo contrario, las obras de multi-p se guardarán incorrectamente！",
+  "save_format_lose_part_warning": "El formato de guardado debe incluir {part},de lo contrario, las obras de multi-p se guardarán incorrectamente!",
   "save_painter_avatar": "Guardar avatar de pintor",
   "favorited_tag": "Etiqueta favorita",
   "legacy_mode_warning": "El modo heredado no está disponible desde  Android9",

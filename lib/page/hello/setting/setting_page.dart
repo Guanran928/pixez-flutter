@@ -122,7 +122,7 @@ class _SettingPageState extends State<SettingPage> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
+                                        horizontal: 16.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -264,7 +264,7 @@ class _SettingPageState extends State<SettingPage> {
                               builder: (context) => NovelRail())),
                     ),
                     ListTile(
-                      leading: Icon(Icons.message),
+                      leading: Icon(Icons.info),
                       title: Text(I18n.of(context).about),
                       onTap: () => Leader.push(
                         context,

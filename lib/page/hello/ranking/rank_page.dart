@@ -19,6 +19,7 @@ import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pixez/component/painter_avatar.dart';
 import 'package:pixez/i18n.dart';
 import 'package:pixez/main.dart';
 import 'package:pixez/page/hello/ranking/rank_store.dart';
@@ -174,6 +175,21 @@ class _RankPageState extends State<RankPage>
                       },
                     );
                   },
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Container(
+                    height: 26,
+                    width: 26,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 1.0),
+                    ),
+                    child: PainterAvatar(
+                      url: accountStore.now!.userImage,
+                      id: int.parse(accountStore.now!.userId),
+                    ),
+                  ),
                 ),
               ],
             ),

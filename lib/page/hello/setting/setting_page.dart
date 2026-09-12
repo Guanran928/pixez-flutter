@@ -200,11 +200,14 @@ class _SettingPageState extends State<SettingPage> {
                       title: Text(I18n.of(context).history_record),
                       onTap: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return Constants.type == 0
-                              ? HistoryPage()
-                              : NovelHistory();
-                        }));
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return Constants.type == 0
+                                  ? HistoryPage()
+                                  : NovelHistory();
+                            },
+                          ),
+                        );
                       },
                     ),
                     ListTile(
@@ -212,9 +215,12 @@ class _SettingPageState extends State<SettingPage> {
                       title: Text(I18n.of(context).quality_setting),
                       onTap: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return SettingQualityPage();
-                        }));
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return SettingQualityPage();
+                            },
+                          ),
+                        );
                       },
                     ),
                     ListTile(
@@ -252,8 +258,11 @@ class _SettingPageState extends State<SettingPage> {
                       leading: Icon(Icons.book),
                       title: Text(I18n.of(context).novel),
                       onTap: () => Navigator.of(context, rootNavigator: true)
-                          .pushReplacement(MaterialPageRoute(
-                              builder: (context) => NovelRail())),
+                          .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => NovelRail(),
+                            ),
+                          ),
                     ),
                     ListTile(
                       leading: Icon(Icons.message),
@@ -276,27 +285,28 @@ class _SettingPageState extends State<SettingPage> {
                         leading: Icon(Icons.article),
                         title: Text(I18n.of(context).bulletin_board),
                         onTap: () => Leader.push(
-                            context,
-                            BoardPage(
-                              boardList: _boardList,
-                            )),
+                          context,
+                          BoardPage(boardList: _boardList),
+                        ),
                       ),
-                    Observer(builder: (context) {
-                      if (accountStore.now != null)
-                        return ListTile(
-                          leading: Icon(Icons.arrow_back),
-                          title: Text(I18n.of(context).logout),
-                          onTap: () => _showLogoutDialog(context),
-                        );
-                      else
-                        return ListTile(
-                          leading: Icon(Icons.arrow_back),
-                          title: Text(I18n.of(context).login),
-                          onTap: () => Leader.push(context, LoginPage()),
-                        );
-                    })
+                    Observer(
+                      builder: (context) {
+                        if (accountStore.now != null)
+                          return ListTile(
+                            leading: Icon(Icons.arrow_back),
+                            title: Text(I18n.of(context).logout),
+                            onTap: () => _showLogoutDialog(context),
+                          );
+                        else
+                          return ListTile(
+                            leading: Icon(Icons.arrow_back),
+                            title: Text(I18n.of(context).login),
+                            onTap: () => Leader.push(context, LoginPage()),
+                          );
+                      },
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -307,26 +317,27 @@ class _SettingPageState extends State<SettingPage> {
 
   Future _showLogoutDialog(BuildContext context) async {
     final result = await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(I18n.of(context).logout),
-            actions: <Widget>[
-              TextButton(
-                child: Text(I18n.of(context).cancel),
-                onPressed: () {
-                  Navigator.of(context).pop("CANCEL");
-                },
-              ),
-              TextButton(
-                child: Text(I18n.of(context).ok),
-                onPressed: () {
-                  Navigator.of(context).pop("OK");
-                },
-              ),
-            ],
-          );
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(I18n.of(context).logout),
+          actions: <Widget>[
+            TextButton(
+              child: Text(I18n.of(context).cancel),
+              onPressed: () {
+                Navigator.of(context).pop("CANCEL");
+              },
+            ),
+            TextButton(
+              child: Text(I18n.of(context).ok),
+              onPressed: () {
+                Navigator.of(context).pop("OK");
+              },
+            ),
+          ],
+        );
+      },
+    );
     switch (result) {
       case "OK":
         {

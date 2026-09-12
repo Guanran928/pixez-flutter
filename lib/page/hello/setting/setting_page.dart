@@ -25,12 +25,10 @@ import 'package:pixez/er/leader.dart';
 import 'package:pixez/er/updater.dart';
 import 'package:pixez/i18n.dart';
 import 'package:pixez/main.dart';
-import 'package:pixez/models/account.dart';
 import 'package:pixez/models/board_info.dart';
 import 'package:pixez/models/glance_illust_persist.dart';
 import 'package:pixez/page/about/about_page.dart';
 import 'package:pixez/page/account/edit/account_edit_page.dart';
-import 'package:pixez/page/account/select/account_select_page.dart';
 import 'package:pixez/page/board/board_page.dart';
 import 'package:pixez/page/book/tag/book_tag_page.dart';
 import 'package:pixez/page/hello/recom/recom_manga_page.dart';
@@ -75,131 +73,125 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(I18n.of(context).more),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.palette),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => ThemePage()));
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              listTileTheme: const ListTileThemeData(
+                contentPadding: EdgeInsets.symmetric(horizontal: 24.0),
+              ),
+              dividerTheme: const DividerThemeData(indent: 16, endIndent: 16),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                AppBar(
-                  elevation: 0.0,
-                  automaticallyImplyLeading: false,
-                  forceMaterialTransparency: true,
-                  backgroundColor: Colors.transparent,
-                  actions: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.palette,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ThemePage()));
-                      },
-                    ),
-                  ],
-                ),
-                Observer(builder: (context) {
-                  if (accountStore.now != null)
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(MaterialPageRoute(builder: (_) {
-                                  return AccountSelectPage();
-                                }));
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  PainterAvatar(
-                                    url: accountStore.now!.userImage,
-                                    id: int.parse(accountStore.now!.userId),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: Text(accountStore.now!.name,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium),
-                                        ),
-                                        if (accountStore
-                                            .now!.mailAddress.isNotEmpty)
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                hideEmail
-                                                    ? accountStore.now!
-                                                        .hiddenEmail()
-                                                    : accountStore
-                                                        .now!.mailAddress,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                              SizedBox(
-                                                width: 6,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    hideEmail = !hideEmail;
-                                                  });
-                                                },
-                                                child: Text(
-                                                    hideEmail
-                                                        ? I18n.of(context)
-                                                            .reveal
-                                                        : I18n.of(context).hide,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall!
-                                                        .copyWith(
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .primary)),
-                                              )
-                                            ],
-                                          )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                if (accountStore.now != null)
+                  Column(
+                    children: <Widget>[
+                      ExpansionTile(
+                        leading: PainterAvatar(
+                          url: accountStore.now!.userImage,
+                          id: int.parse(accountStore.now!.userId),
+                          size: Size(40, 40),
+                        ),
+
+                        title: Text(accountStore.now!.name),
+
+                        subtitle: Text(
+                          accountStore.now!.mailAddress,
+
+                          // not sure why but ExpansionTile.subtitle does not give gray text like ListTile.subtitle
+                          style: TextStyle(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
+                        ),
+
+                        tilePadding: EdgeInsets.symmetric(horizontal: 16.0),
+
+                        children: [
+                          for (var accountPersist in accountStore.accounts)
+                            if (accountPersist != accountStore.now) 
+                            ListTile(
+                              dense: true,
+                              minTileHeight: 56.0,
+
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.0,
+                              ),
+
+                              leading: PainterAvatar(
+                                url: accountPersist.userImage,
+                                id: int.parse(accountPersist.userId),
+                                size: Size(32, 32),
+                              ),
+
+                              title: Text(
+                                accountPersist.name,
+                                style: TextStyle(fontSize: 14),
+                              ),
+
+                              subtitle: Text(
+                                accountPersist.mailAddress,
+                                // style: TextStyle(fontSize: 12),
+                              ),
+
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  accountStore.deleteSingle(accountPersist.id!);
+                                },
+                              ),
+
+                              onTap: () async {
+                                if (accountPersist != accountStore.now) {
+                                  // await accountStore.select(index);
+                                  setState(() {});
+                                }
+                              },
+                            ),
+
                           ListTile(
-                            leading: Icon(Icons.account_box),
-                            title: Text(I18n.of(context).account_message),
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      AccountEditPage()));
-                            },
-                          )
+                            leading: Icon(Icons.add),
+                            title: Text("Add another account"),
+                            minTileHeight: 48.0,
+                            onTap: () =>
+                                Navigator.of(context, rootNavigator: true).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => LoginPage(),
+                                  ),
+                                ),
+                          ),
                         ],
                       ),
-                    );
-                  return Container();
-                }),
+                      ListTile(
+                        leading: Icon(Icons.account_box),
+                        title: Text(I18n.of(context).account_message),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  AccountEditPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 Divider(),
                 Column(
                   children: <Widget>[

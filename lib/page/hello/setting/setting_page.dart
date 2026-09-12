@@ -167,7 +167,7 @@ class _SettingPageState extends State<SettingPage> {
 
                           ListTile(
                             leading: Icon(Icons.add),
-                            title: Text("Add another account"),
+                            title: Text(I18n.of(context).account_add_another),
                             minTileHeight: 48.0,
                             onTap: () =>
                                 Navigator.of(context, rootNavigator: true).push(
